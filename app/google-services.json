@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "638634525208",
+    "project_id": "personal-apps-36187",
+    "storage_bucket": "personal-apps-36187.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638634525208:android:2a6914c20c3f38fe65b96d",
+        "android_client_info": {
+          "package_name": "com.mitf.serverdrivenui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "638634525208-hlc2fegnransakbtvpg13eo4ga6j48ng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApv9r6FiTNhFNUjPMFJzIK8wtG35ImtzE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "638634525208-hlc2fegnransakbtvpg13eo4ga6j48ng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
