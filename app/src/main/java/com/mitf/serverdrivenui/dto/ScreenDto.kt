@@ -11,18 +11,30 @@ data class ScreenDto (
 data class WidgetDto (
     val children: List<WidgetDto>? = null,
     val label: String? = null,
+    val validation: List<String>? = null,
     val sublabel: String? = null,
     val viewtype: ViewType? = null,
     val default: String? = null,
-    val data: String? = null
+    val data: String? = null,
+    val isEnable: Boolean? = true,
+    val classType: List<String>? = null,
+    val options: List<ItemOptions>? = null
+)
+
+@JsonClass(generateAdapter = true)
+data class ItemOptions(
+    val key: String,
+    val value: String
 )
 
 enum class ViewType {
     TEXT,
     TITLE,
     TEXT_FIELD,
+    TEXT_FIELD_SELECTOR,
     CHECKBOX,
     FORM,
     LOGIN_FORM,
+    RADIO,
     MAINTENANCE
 }

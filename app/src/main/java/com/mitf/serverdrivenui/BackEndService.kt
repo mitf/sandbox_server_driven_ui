@@ -10,7 +10,7 @@ class FakeBackEndService : BackEndService {
         return when (path) {
             "/" -> initialScreen
             "/check" -> secondScreen.also {
-                fullname = parameters["first_name"] + " " + parameters["last_name"]
+                fullname = parameters["username"] + " " + parameters["radio"].toString()
             }
             "/welcome" -> finalScreen
                 .replace("##1##", fullname ?: "")
@@ -32,13 +32,43 @@ val initialScreen = """
                             "label" : "Login"
                         },
                         {
+                            "classType" : [],
                             "viewtype" : "TEXT_FIELD",
-                            "label" : "First",
-                            "data" : "first_name"
+                            "label" : "Example Input Field",
+                            "data" : "username",
+                            "default" : "RESPONSE",
+                            "validation" : [
+                                "required",
+                                "min:3",
+                                "max:10"
+                            ]
                         }, {
+                            "classType" : [
+                                "password"
+                            ],
                             "viewtype" : "TEXT_FIELD",
-                            "label": "Last",
-                            "data" : "last_name"
+                            "label": "Example Password",
+                            "data" : "password",
+                            "validation" : [
+                                "required",
+                                "max:16"
+                            ]
+                        },
+                        {
+                            "viewtype" : "RADIO",
+                            "label" : "Example Radio",
+                            "default" : "true",
+                            "data" : "radio",
+                            "options" : [
+                                {
+                                    "key" : "Ya",
+                                    "value" : "true"
+                                },
+                                {
+                                    "key" : "Tidak",
+                                    "value" : "false"
+                                }
+                            ]
                         }
                     ],
                     "label" : "Submit",
@@ -59,17 +89,18 @@ val secondScreen = """
                     "viewtype" : "FORM",
                     "children" : [
                         {
-                            "viewtype" : "TEXT",
-                            "label" : "Checkboxes"
-                        },
-                        {
                             "viewtype" : "CHECKBOX",
-                            "label" : "First",
-                            "data" : "first_check"
-                        }, {
-                            "viewtype" : "CHECKBOX",
-                            "label": "Last",
-                            "data" : "last_check"
+                            "label" : "Checkboxes",
+                            "options" : [
+                                {
+                                    "key" : "Check A",
+                                    "value" : "true"
+                                },
+                                {
+                                    "key" : "Check B",
+                                    "value" : "false"
+                                }
+                            ]
                         }
                     ],
                     "label" : "Submit",

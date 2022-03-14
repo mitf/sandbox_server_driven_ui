@@ -52,6 +52,8 @@ fun WidgetDto.getComposableWidget(): ComposableWidget {
         ViewType.FORM -> FormWidget(this)
         ViewType.CHECKBOX -> CheckBoxWidget(this)
         ViewType.LOGIN_FORM -> LoginFormWidget(this)
+        ViewType.TEXT_FIELD_SELECTOR -> TextFieldSelectorWidget(this)
+        ViewType.RADIO -> RadioWidget(this)
         else -> EmptyWidget()
     }
 }
