@@ -3,8 +3,10 @@ package com.mitf.serverdrivenui
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
 import com.mitf.serverdrivenui.dto.ScreenDto
 import com.mitf.serverdrivenui.ui.Screen
 import com.mitf.serverdrivenui.ui.theme.ServerDrivenUITheme
@@ -12,14 +14,23 @@ import com.squareup.moshi.Moshi
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: MainViewModel
+    var positionData = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ServiceLocator.put(BackEndService::class.java, FakeBackEndService())
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setContent {
             ServerDrivenUITheme {
                 MyScreenContent()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }
 
