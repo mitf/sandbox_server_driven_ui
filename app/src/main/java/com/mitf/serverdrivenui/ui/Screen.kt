@@ -1,7 +1,7 @@
 package com.mitf.serverdrivenui.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -17,12 +17,10 @@ class Screen(screenDto: ScreenDto) {
 
     @Composable
     fun compose() {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.wrapContentHeight()) {
             val fields = widget.map { it.getHoist() }
-            Column(modifier = Modifier.fillMaxSize()) {
-                widget.zip(fields).map {
-                    it.first.compose(it.second)
-                }
+            widget.zip(fields).map {
+                it.first.compose(it.second)
             }
         }
     }
@@ -36,6 +34,7 @@ interface ComposableWidget {
 }
 
 class EmptyWidget : ComposableWidget {
+
     @Composable
     override fun compose(hoist: Map<String, MutableState<String>>) {}
 

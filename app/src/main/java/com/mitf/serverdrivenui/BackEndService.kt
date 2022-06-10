@@ -25,7 +25,7 @@ val initialScreen = """
         {
             "children" : [
                 {
-                    "viewtype" : "LOGIN_FORM",
+                    "viewtype" : "FORM",
                     "children" : [
                         {
                             "viewtype" : "TEXT",
@@ -37,36 +37,74 @@ val initialScreen = """
                             "label" : "Example Input Field",
                             "data" : "username",
                             "default" : "RESPONSE",
+                            "placeholder": "Example: user_1, user.2, user@3",
                             "validation" : [
                                 "required",
-                                "min:3",
+                                "min:6",
                                 "max:10"
                             ]
-                        }, {
+                        },
+                        {
+                            "classType" : [
+                                "disable"
+                            ],
+                            "viewtype" : "TEXT_FIELD",
+                            "label" : "Example Input Field",
+                            "data" : "username",
+                            "default" : "RESPONSE",
+                            "placeholder": "Example: user_1, user.2, user@3",
+                            "validation" : [
+                                "required",
+                                "min:6",
+                                "max:10"
+                            ]
+                        },
+                         {
                             "classType" : [
                                 "password"
                             ],
                             "viewtype" : "TEXT_FIELD",
                             "label": "Example Password",
                             "data" : "password",
+                            "placeholder": "Input password",
                             "validation" : [
                                 "required",
                                 "max:16"
                             ]
                         },
                         {
+                            "classType" : [],
+                            "viewtype" : "TEXT_FIELD_SELECTOR",
+                            "label": "Example Selector 1",
+                            "placeholder": "Please select Example Selector",
+                            "data" : "selector1",
+                            "validation" : [
+                                "required"
+                            ]
+                        },
+                        {
+                            "classType" : [],
+                            "viewtype" : "TEXT_FIELD_SELECTOR",
+                            "label": "Example Selector 2",
+                            "placeholder": "Please select Example Selector",
+                            "data" : "selector2",
+                            "validation" : [
+                                "required"
+                            ]
+                        },
+                        {
                             "viewtype" : "RADIO",
                             "label" : "Example Radio",
-                            "default" : "true",
+                            "default" : "",
                             "data" : "radio",
                             "options" : [
                                 {
                                     "key" : "Ya",
-                                    "value" : "true"
+                                    "value" : "1"
                                 },
                                 {
                                     "key" : "Tidak",
-                                    "value" : "false"
+                                    "value" : "2"
                                 }
                             ]
                         }

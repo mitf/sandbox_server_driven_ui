@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mitf.serverdrivenui.dto.WidgetDto
 import com.mitf.serverdrivenui.ui.ComposableWidget
-import com.mitf.serverdrivenui.ui.getComposableWidget
 import com.mitf.serverdrivenui.ui.theme.CaptionRegular
 
 class CheckBoxWidget(private val widgetDto: WidgetDto) : ComposableWidget {

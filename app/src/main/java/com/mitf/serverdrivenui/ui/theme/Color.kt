@@ -11,6 +11,7 @@ val Teal200 = Color(0xFF03DAC5)
  * Color Misc
  */
 val White = Color(0xFFFFFFFF)
+val BackgroundTransparent = Color(0x99646464)
 
 /**
  * Color Primary Blue

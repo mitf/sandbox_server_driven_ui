@@ -2,6 +2,7 @@ package com.mitf.serverdrivenui.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
@@ -21,7 +22,7 @@ private val LightColorPalette = lightColors(
 @Composable
 fun ServerDrivenUITheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) {
         DarkColorPalette

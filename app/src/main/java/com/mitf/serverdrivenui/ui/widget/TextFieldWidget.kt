@@ -1,20 +1,22 @@
 package com.mitf.serverdrivenui.ui.widget
 
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -40,7 +42,20 @@ class TextFieldWidget(private val widgetDto: WidgetDto) : ComposableWidget {
         val maxLength by remember { mutableStateOf(widgetDto.validation.findSubStringAfter("max")) }
 
         val density = LocalDensity.current
-        var passwordVisible by remember { mutableStateOf(widgetDto.classType?.contains("password") ?: false) }
+        var passwordVisible by remember {
+            mutableStateOf(
+                widgetDto.classType?.contains("password") ?: false
+            )
+        }
+        val isEnable by remember {
+            mutableStateOf(
+                widgetDto.classType?.contains("disable") ?: true
+            )
+        }
+
+        var value by remember {
+            mutableStateOf(hoist[fieldName]?.value ?: "")
+        }
 
         Column {
             Text(
@@ -53,13 +68,13 @@ class TextFieldWidget(private val widgetDto: WidgetDto) : ComposableWidget {
             OutlinedTextField(
                 modifier = Modifier
                     .background(
-                        color = if (widgetDto.isEnable != false) White else Black200,
+                        color = if (!isEnable) White else Black200,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(size = 8.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    backgroundColor = if (widgetDto.isEnable != false) White else Black200,
+                    backgroundColor = if (!isEnable) White else Black200,
                     cursorColor = Blue600,
                     focusedBorderColor = Blue600,
                     errorBorderColor = Danger500,
@@ -71,10 +86,10 @@ class TextFieldWidget(private val widgetDto: WidgetDto) : ComposableWidget {
                     disabledPlaceholderColor = Black300
                 ),
                 isError = !isValid,
-                enabled = widgetDto.isEnable != false,
-                value = hoist[fieldName]?.value ?: "",
+                enabled = !isEnable,
+                value = value,
                 onValueChange = { data: String ->
-                    if (data.length <= maxLength.toIntOrZero()) hoist[fieldName]?.value = data
+                    if (data.length <= maxLength.toIntOrZero()) value = data
                     isValid = when {
                         (data.isEmpty() && required.contains("required")) -> {
                             errorText = "${widgetDto.label} tidak boleh kosong"
@@ -88,14 +103,15 @@ class TextFieldWidget(private val widgetDto: WidgetDto) : ComposableWidget {
                         else -> true
                     }
                 },
-                placeholder = { Text(text = "hint", style = CaptionRegular, color = Black600) },
+                placeholder = { Text(text = widgetDto.placeholder ?: "", style = CaptionRegular, color = Black600) },
                 trailingIcon = {
                     if (widgetDto.classType?.contains("password") == true) {
                         IconToggleButton(
+                            enabled = !isEnable,
                             checked = passwordVisible,
                             onCheckedChange = { passwordVisible = it }) {
                             Icon(
-                                imageVector = if (passwordVisible) Icons.Outlined.Add else Icons.Outlined.Close,
+                                imageVector = if (passwordVisible) Icons.Default.Lock else Icons.Outlined.Lock,
                                 contentDescription = null
                             )
                         }
@@ -105,7 +121,15 @@ class TextFieldWidget(private val widgetDto: WidgetDto) : ComposableWidget {
                     PasswordVisualTransformation()
                 } else {
                     VisualTransformation.None
-                }
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    capitalization = if (widgetDto.classType?.contains("password") == false) {
+                        KeyboardCapitalization.Characters
+                    } else {
+                        KeyboardCapitalization.None
+                    }
+                )
             )
             AnimatedVisibility(
                 visible = !isValid,

@@ -18,7 +18,8 @@ data class WidgetDto (
     val data: String? = null,
     val isEnable: Boolean? = true,
     val classType: List<String>? = null,
-    val options: List<ItemOptions>? = null
+    val options: List<ItemOptions>? = null,
+    val placeholder: String? = null
 )
 
 @JsonClass(generateAdapter = true)
