@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import com.mitf.serverdrivenui.dto.WidgetDto
 import com.mitf.serverdrivenui.ui.ComposableWidget
+import com.mitf.serverdrivenui.ui.WidgetViewModel
 
 class TextWidget(private val widgetDto: WidgetDto) : ComposableWidget {
     @Composable

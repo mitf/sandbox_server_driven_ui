@@ -60,11 +60,6 @@ class SecondFragment : Fragment() {
             ) {
                 Text(text = "Username : $username")
                 Text(text = "Password : $password")
-                Button(onClick = { composableScope.launch {
-                    initBottomSheet()
-                } }) {
-
-                }
             }
         }
     }

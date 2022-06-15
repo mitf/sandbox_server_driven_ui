@@ -1,5 +1,10 @@
 package com.mitf.serverdrivenui
 
+
+/*
+    TODO Question:
+        1.
+ */
 interface BackEndService {
     fun getPage(path: String, parameters: Map<String, String>): String
 }
@@ -10,7 +15,7 @@ class FakeBackEndService : BackEndService {
         return when (path) {
             "/" -> initialScreen
             "/check" -> secondScreen.also {
-                fullname = parameters["first_name"] + " " + parameters["last_name"]
+                fullname = parameters["username"] + " " + parameters["radio"].toString()
             }
             "/welcome" -> finalScreen
                 .replace("##1##", fullname ?: "")
@@ -25,20 +30,165 @@ val initialScreen = """
         {
             "children" : [
                 {
-                    "viewtype" : "LOGIN_FORM",
+                    "viewtype" : "FORM",
                     "children" : [
                         {
                             "viewtype" : "TEXT",
                             "label" : "Login"
                         },
                         {
+                            "classType" : [
+                                "multiline"
+                            ],
                             "viewtype" : "TEXT_FIELD",
-                            "label" : "First",
-                            "data" : "first_name"
-                        }, {
+                            "label" : "Example Input Field",
+                            "data" : "username",
+                            "default" : "",
+                            "placeholder": "Example: user_1, user.2, user@3",
+                            "validation" : [
+                                "required",
+                                "min:6",
+                                "max:10"
+                            ]
+                        },
+                        {
+                            "classType" : [
+                                "singleline"
+                            ],
                             "viewtype" : "TEXT_FIELD",
-                            "label": "Last",
-                            "data" : "last_name"
+                            "label" : "Example Input Field",
+                            "data" : "username new",
+                            "default" : "",
+                            "placeholder": "Example: user_1, user.2, user@3",
+                            "validation" : [
+                                "required",
+                                "min:6",
+                                "max:10"
+                            ]
+                        },
+                        {
+                            "classType" : [
+                                "password"
+                            ],
+                            "viewtype" : "TEXT_FIELD",
+                            "label": "Example Password",
+                            "data" : "password",
+                            "placeholder": "Input password",
+                            "validation" : [
+                                "required",
+                                "max:16"
+                            ]
+                        },
+                        {
+                            "classType" : [
+                                "singleline",
+                                "number"
+                            ],
+                            "viewtype" : "TEXT_FIELD",
+                            "label" : "Example Number Field",
+                            "data" : "Number Field",
+                            "default" : "",
+                            "placeholder": "123456789",
+                            "validation" : [
+                                "required",
+                                "max:16"
+                            ]
+                        },
+                        {
+                            "classType" : [
+                                "singleline",
+                                "number"
+                            ],
+                            "viewtype" : "TEXT_FIELD_SEPARATE",
+                            "label" : "Example Field Separate 1",
+                            "data" : "Number Field",
+                            "default" : "",
+                            "placeholder": "tester123456",
+                            "validation" : [
+                                "required",
+                                "max:16"
+                            ]
+                        },
+                        {
+                            "classType" : [
+                                "singleline",
+                                "number"
+                            ],
+                            "viewtype" : "TEXT_FIELD_SEPARATE",
+                            "label" : "Example Field Separate 2",
+                            "data" : "Number Field",
+                            "default" : "",
+                            "placeholder": "tester12345678",
+                            "validation" : [
+                                "required",
+                                "max:16"
+                            ]
+                        },
+                        {
+                            "classType" : [
+                                "singleline",
+                                "number"
+                            ],
+                            "viewtype" : "TEXT_FIELD_SEPARATE",
+                            "label" : "Example Field Separate 3",
+                            "data" : "Number Field",
+                            "default" : "",
+                            "placeholder": "tester12345678",
+                            "validation" : [
+                                "required",
+                                "max:16"
+                            ]
+                        },
+                        {
+                            "classType" : [
+                                "singleline",
+                                "currency"
+                            ],
+                            "viewtype" : "TEXT_FIELD_CURRENCY",
+                            "label" : "Example Currency Field",
+                            "data" : "Number Field",
+                            "default" : "",
+                            "placeholder": "Rp10.000",
+                            "validation" : [
+                                "required",
+                                "max:16"
+                            ]
+                        },
+                        {
+                            "classType" : [],
+                            "viewtype" : "TEXT_FIELD_SELECTOR",
+                            "label": "Example Selector 1",
+                            "placeholder": "Please select Example Selector",
+                            "data" : "selector1",
+                            "validation" : [
+                                "required"
+                            ]
+                        },
+                        {
+                            "classType" : [],
+                            "viewtype" : "TEXT_FIELD_SELECTOR",
+                            "label": "Example Selector 2",
+                            "placeholder": "Please select Example Selector",
+                            "data" : "selector2",
+                            "validation" : [
+                                "required"
+                            ]
+                        },
+                        {
+                            "viewtype" : "RADIO",
+                            "label" : "Example Radio",
+                            "default" : "",
+                            "data" : "radio",
+                            "options" : [
+                                {
+                                    "key" : "Ya",
+                                    "value" : "1"
+                                },
+                                {
+                                    "key" : "Tidak",
+                                    "value" : "2"
+                                }
+                            ]
                         }
                     ],
                     "label" : "Submit",
@@ -59,17 +209,18 @@ val secondScreen = """
                     "viewtype" : "FORM",
                     "children" : [
                         {
-                            "viewtype" : "TEXT",
-                            "label" : "Checkboxes"
-                        },
-                        {
                             "viewtype" : "CHECKBOX",
-                            "label" : "First",
-                            "data" : "first_check"
-                        }, {
-                            "viewtype" : "CHECKBOX",
-                            "label": "Last",
-                            "data" : "last_check"
+                            "label" : "Checkboxes",
+                            "options" : [
+                                {
+                                    "key" : "Check A",
+                                    "value" : "true"
+                                },
+                                {
+                                    "key" : "Check B",
+                                    "value" : "false"
+                                }
+                            ]
                         }
                     ],
                     "label" : "Submit",

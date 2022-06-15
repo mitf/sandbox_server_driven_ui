@@ -60,6 +60,13 @@ class DashboardFragment : Fragment() {
     }
 
     @Composable
+    fun composeTest() {
+        Box(modifier = Modifier.fillMaxSize()) {
+
+        }
+    }
+
+    @Composable
     fun composeView() {
         var txtUsername by remember {
             mutableStateOf("")
@@ -227,18 +234,18 @@ class DashboardFragment : Fragment() {
                             fontWeight = FontWeight.Bold
                         )
                     }
-                    Image(
-                        painter = painterResource(id = R.drawable.bg_bottom),
-                        contentDescription = "ImageIcon",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(80.dp)
-                            .constrainAs(imgBottom) {
-                                end.linkTo(parent.end)
-                                start.linkTo(parent.start)
-                                bottom.linkTo(parent.bottom)
-                            }
-                    )
+//                    Image(
+//                        painter = painterResource(id = R.drawable.bg_bottom),
+//                        contentDescription = "ImageIcon",
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .height(80.dp)
+//                            .constrainAs(imgBottom) {
+//                                end.linkTo(parent.end)
+//                                start.linkTo(parent.start)
+//                                bottom.linkTo(parent.bottom)
+//                            }
+//                    )
                 }
             }
             ConstraintLayout(
@@ -259,7 +266,8 @@ class DashboardFragment : Fragment() {
                         painter = painterResource(id = R.drawable.logo_ojk),
                         contentDescription = "",
                         contentScale = ContentScale.FillBounds,
-                        modifier = Modifier.fillMaxHeight()
+                        modifier = Modifier
+                            .fillMaxHeight()
                             .width(80.dp),
                     )
                 }

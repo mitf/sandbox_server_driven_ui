@@ -1,24 +1,22 @@
 package com.mitf.serverdrivenui.ui.widget
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Text
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.sp
 import com.mitf.serverdrivenui.dto.WidgetDto
 import com.mitf.serverdrivenui.ui.ComposableWidget
 import com.mitf.serverdrivenui.ui.WidgetViewModel
 
-class TitleWidget(private val widgetDto: WidgetDto) : ComposableWidget {
+class ImageWidget(private val widgetDto: WidgetDto) : ComposableWidget {
 
+    @OptIn(ExperimentalFoundationApi::class)
     @Composable
     override fun compose(hoist: Map<String, MutableState<String>>) {
-        Text(
-            widgetDto.label ?: "",
-            modifier = Modifier.fillMaxWidth(),
-            fontSize = 30.sp
-        )
+        LazyVerticalGrid(cells = GridCells.Fixed(2)) {
+
+        }
     }
 
     override fun getHoist(): Map<String, MutableState<String>> {
