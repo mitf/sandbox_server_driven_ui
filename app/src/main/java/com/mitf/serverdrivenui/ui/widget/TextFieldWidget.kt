@@ -25,16 +25,16 @@ import com.mitf.serverdrivenui.utils.toIntOrZero
 
 /*
    TODO :
-        1. Implement TextFieldRowWidget like RT/RW and Number Field
-        2. Searching Added some category field like number only field Done
-        3.
-*  */
+        1. Implement TextFieldRowWidget like RT/RW and Number Field Done
+        2. Searching Added category field like number only field Done
+        3. Searching Added category field like character only field Done
+*/
 
 /*
     TODO :
-        1. Implement BaseActivity for
+        1. Implement BaseActivity for SDUI
         2. Implement endpath for navigation
-* */
+*/
 
 class TextFieldWidget(private val widgetDto: WidgetDto) : ComposableWidget {
     private val fieldName = widgetDto.data ?: "value"
