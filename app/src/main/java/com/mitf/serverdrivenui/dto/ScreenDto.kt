@@ -30,6 +30,8 @@ data class ItemOptions(
 
 enum class ViewType {
     TEXT,
+    TEXT_ROW,
+    TEXT_ROW_FIELD,
     TITLE,
     TEXT_FIELD,
     TEXT_FIELD_SELECTOR,

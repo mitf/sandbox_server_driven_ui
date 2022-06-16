@@ -2,9 +2,7 @@ package com.mitf.serverdrivenui.ui.widget
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -34,7 +32,8 @@ import com.mitf.serverdrivenui.utils.toIntOrZero
 
 /*
     TODO :
-        1. Implement BaseActivity
+        1. Implement BaseActivity for
+        2. Implement endpath for navigation
 * */
 
 class TextFieldWidget(private val widgetDto: WidgetDto) : ComposableWidget {
@@ -77,108 +76,110 @@ class TextFieldWidget(private val widgetDto: WidgetDto) : ComposableWidget {
             mutableStateOf(hoist[fieldName]?.value ?: "")
         }
 
-        Column {
-            Text(
-                modifier = Modifier
-                    .padding(top = 16.dp, bottom = 8.dp)
-                    .fillMaxWidth(),
-                text = widgetDto.label ?: "",
-                style = CaptionRegular
-            )
-            OutlinedTextField(
-                modifier = Modifier
-                    .background(
-                        color = if (!isEnable) White else Black200,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(size = 8.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    backgroundColor = if (!isEnable) White else Black200,
-                    cursorColor = Blue600,
-                    focusedBorderColor = Blue600,
-                    errorBorderColor = Danger500,
-                    errorCursorColor = Danger500,
-                    unfocusedBorderColor = Black300,
-                    disabledTextColor = Black300,
-                    disabledLabelColor = Black300,
-                    disabledBorderColor = Black300,
-                    disabledPlaceholderColor = Black300
-                ),
-                isError = !isValid,
-                enabled = !isEnable,
-                value = if (isDigit) values.filter { it.isDigit() } else values,
-                singleLine = isSingleLine,
-                onValueChange = { data: String ->
-                    if (data.length <= maxLength.toIntOrZero()) values = data
-                    isValid = when {
-                        (data.isEmpty() && required.contains("required")) -> {
-                            errorText = "${widgetDto.label} tidak boleh kosong"
-                            false
-                        }
-                        data.length < minLength.toIntOrZero() -> {
-                            errorText =
-                                "Mohon masukan ${widgetDto.label} sesuai format (Minimal $minLength Character)"
-                            false
-                        }
-                        else -> true
-                    }
-                },
-                placeholder = {
-                    Text(
-                        text = widgetDto.placeholder ?: "",
-                        style = CaptionRegular,
-                        color = Black600
-                    )
-                },
-                trailingIcon = {
-                    if (widgetDto.classType?.contains("password") == true) {
-                        IconToggleButton(
-                            enabled = !isEnable,
-                            checked = passwordVisible,
-                            onCheckedChange = { passwordVisible = it }) {
-                            Icon(
-                                imageVector = if (passwordVisible) Icons.Default.Lock else Icons.Outlined.Lock,
-                                contentDescription = null
-                            )
-                        }
-                    }
-                },
-                visualTransformation = if (passwordVisible) {
-                    PasswordVisualTransformation()
-                } else {
-                    VisualTransformation.None
-                },
-                keyboardOptions = KeyboardOptions(
-                    imeAction = if (isSingleLine || widgetDto.classType?.contains("password") == true) {
-                        ImeAction.Next
-                    } else {
-                        ImeAction.Default
-                    },
-                    capitalization = if (widgetDto.classType?.contains("password") == false) {
-                        KeyboardCapitalization.Characters
-                    }
-                    else {
-                        KeyboardCapitalization.None
-                    },
-                    keyboardType = if (isDigit) KeyboardType.Number else KeyboardType.Text
-                )
-            )
-            AnimatedVisibility(
-                visible = !isValid,
-                enter = slideInVertically(initialOffsetY = { with(density) { -40.dp.roundToPx() } })
-                        + expandVertically(expandFrom = Alignment.Top)
-                        + fadeIn(initialAlpha = 0.3f),
-                exit = slideOutVertically() + shrinkVertically() + fadeOut()
-            ) {
+        Row {
+            Column(modifier = Modifier.weight(1F, true)) {
                 Text(
                     modifier = Modifier
-                        .padding(top = 8.dp)
-                        .fillMaxWidth(),
-                    text = errorText,
-                    color = Danger500,
-                    style = TinyMedium
+                        .padding(top = 16.dp, bottom = 8.dp)
+                        .wrapContentWidth(),
+                    text = widgetDto.label ?: "",
+                    style = CaptionRegular
                 )
+                OutlinedTextField(
+                    modifier = Modifier
+                        .background(
+                            color = if (!isEnable) White else Black200,
+                            shape = RoundedCornerShape(size = 8.dp)
+                        )
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(size = 8.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        backgroundColor = if (!isEnable) White else Black200,
+                        cursorColor = Blue600,
+                        focusedBorderColor = Blue600,
+                        errorBorderColor = Danger500,
+                        errorCursorColor = Danger500,
+                        unfocusedBorderColor = Black300,
+                        disabledTextColor = Black300,
+                        disabledLabelColor = Black300,
+                        disabledBorderColor = Black300,
+                        disabledPlaceholderColor = Black300
+                    ),
+                    isError = !isValid,
+                    enabled = !isEnable,
+                    value = if (isDigit) values.filter { it.isDigit() } else values,
+                    singleLine = isSingleLine,
+                    onValueChange = { data: String ->
+                        if (data.length <= maxLength.toIntOrZero()) values = data
+                        isValid = when {
+                            (data.isEmpty() && required.contains("required")) -> {
+                                errorText = "${widgetDto.label} tidak boleh kosong"
+                                false
+                            }
+                            data.length < minLength.toIntOrZero() -> {
+                                errorText =
+                                    "Mohon masukan ${widgetDto.label} sesuai format (Minimal $minLength Character)"
+                                false
+                            }
+                            else -> true
+                        }
+                    },
+                    placeholder = {
+                        Text(
+                            text = widgetDto.placeholder ?: "",
+                            style = CaptionRegular,
+                            color = Black600
+                        )
+                    },
+                    trailingIcon = {
+                        if (widgetDto.classType?.contains("password") == true) {
+                            IconToggleButton(
+                                enabled = !isEnable,
+                                checked = passwordVisible,
+                                onCheckedChange = { passwordVisible = it }) {
+                                Icon(
+                                    imageVector = if (passwordVisible) Icons.Default.Lock else Icons.Outlined.Lock,
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                    },
+                    visualTransformation = if (passwordVisible) {
+                        PasswordVisualTransformation()
+                    } else {
+                        VisualTransformation.None
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = if (isSingleLine || widgetDto.classType?.contains("password") == true) {
+                            ImeAction.Next
+                        } else {
+                            ImeAction.Default
+                        },
+                        capitalization = if (widgetDto.classType?.contains("password") == false) {
+                            KeyboardCapitalization.Characters
+                        }
+                        else {
+                            KeyboardCapitalization.None
+                        },
+                        keyboardType = if (isDigit) KeyboardType.Number else KeyboardType.Text
+                    )
+                )
+                AnimatedVisibility(
+                    visible = !isValid,
+                    enter = slideInVertically(initialOffsetY = { with(density) { -40.dp.roundToPx() } })
+                            + expandVertically(expandFrom = Alignment.Top)
+                            + fadeIn(initialAlpha = 0.3f),
+                    exit = slideOutVertically() + shrinkVertically() + fadeOut()
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth(),
+                        text = errorText,
+                        color = Danger500,
+                        style = TinyMedium
+                    )
+                }
             }
         }
     }

@@ -37,6 +37,45 @@ val initialScreen = """
                             "label" : "Login"
                         },
                         {
+                            "viewtype" : "TEXT_ROW",
+                            "children" : [
+                                {
+                                    "classType" : [
+                                        "singleline",
+                                        "text",
+                                        "width:80"
+                                    ],
+                                    "viewtype" : "TEXT_ROW_FIELD",
+                                    "label" : "Example Row Number 1",
+                                    "data" : "Number Field",
+                                    "default" : "",
+                                    "width":[
+                                    ],
+                                    "placeholder": "Area Phone",
+                                    "validation" : [
+                                        "required",
+                                        "max:16"
+                                    ]
+                                },
+                                {
+                                    "classType" : [
+                                        "singleline",
+                                        "number",
+                                        "width:260"
+                                    ],
+                                    "viewtype" : "TEXT_ROW_FIELD",
+                                    "label" : "Example Row Number 2",
+                                    "data" : "Number Field",
+                                    "default" : "",
+                                    "placeholder": "tester12345678",
+                                    "validation" : [
+                                        "required",
+                                        "max:16"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
                             "classType" : [
                                 "multiline"
                             ],
@@ -147,7 +186,7 @@ val initialScreen = """
                             "viewtype" : "TEXT_FIELD_CURRENCY",
                             "label" : "Example Currency Field",
                             "data" : "Number Field",
-                            "default" : "",
+                            "default" : 0,
                             "placeholder": "Rp10.000",
                             "validation" : [
                                 "required",

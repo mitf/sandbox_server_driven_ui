@@ -35,7 +35,7 @@ class TextFieldCurrencyWidget(
     @OptIn(ExperimentalAnimationApi::class)
     @Composable
     override fun compose(hoist: Map<String, MutableState<String>>) {
-        var isValid by remember { mutableStateOf(true) }
+        val isValid by remember { mutableStateOf(true) }
         var errorText by remember { mutableStateOf("") }
         val required by remember {
             mutableStateOf(widgetDto.validation.findString("required"))
@@ -105,7 +105,7 @@ class TextFieldCurrencyWidget(
                         values = formatted
                         TextFieldValue(
                             text = data,
-                            selection = TextRange(values.length)
+                            selection = TextRange(data.length + 1)
                         )
                     }
                 },
