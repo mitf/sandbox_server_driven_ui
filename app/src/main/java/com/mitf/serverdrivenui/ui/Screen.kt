@@ -167,7 +167,6 @@ class EmptyWidget : ComposableWidget {
 fun WidgetDto.getComposableWidget(): ComposableWidget {
     return when (this.viewtype) {
         ViewType.TEXT_FIELD -> TextFieldWidget(this)
-//        ViewType.TEXT_FIELD_SEPARATE -> TextFieldSeparateWidget(this)
         ViewType.TEXT_FIELD_SELECTOR -> TextFieldSelectorWidget(this)
         ViewType.TEXT_FIELD_CURRENCY -> TextFieldCurrencyWidget(this)
         ViewType.TITLE -> TitleWidget(this)

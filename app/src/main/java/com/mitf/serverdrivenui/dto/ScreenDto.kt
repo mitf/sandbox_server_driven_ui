@@ -36,7 +36,6 @@ enum class ViewType {
     TEXT_FIELD,
     TEXT_FIELD_SELECTOR,
     TEXT_FIELD_CURRENCY,
-    TEXT_FIELD_SEPARATE,
     CHECKBOX,
     FORM,
     LOGIN_FORM,

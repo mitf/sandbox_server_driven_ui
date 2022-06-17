@@ -4,7 +4,6 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -28,6 +27,7 @@ import com.mitf.serverdrivenui.utils.toIntOrZero
         1. Implement TextFieldRowWidget like RT/RW and Number Field Done
         2. Searching Added category field like number only field Done
         3. Searching Added category field like character only field Done
+        4. Added currency field DONE
 */
 
 /*

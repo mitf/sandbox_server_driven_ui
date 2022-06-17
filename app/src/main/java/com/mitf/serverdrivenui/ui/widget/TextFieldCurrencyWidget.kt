@@ -1,5 +1,6 @@
 package com.mitf.serverdrivenui.ui.widget
 
+import android.text.Selection
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -13,17 +14,14 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import com.mitf.serverdrivenui.dto.WidgetDto
 import com.mitf.serverdrivenui.ui.ComposableWidget
 import com.mitf.serverdrivenui.ui.theme.*
-import com.mitf.serverdrivenui.utils.findString
-import com.mitf.serverdrivenui.utils.findSubStringAfter
-import com.mitf.serverdrivenui.utils.getValueString
-import com.mitf.serverdrivenui.utils.toLongOrZero
+import com.mitf.serverdrivenui.utils.*
 import java.text.NumberFormat
 import java.util.*
 
@@ -35,7 +33,7 @@ class TextFieldCurrencyWidget(
     @OptIn(ExperimentalAnimationApi::class)
     @Composable
     override fun compose(hoist: Map<String, MutableState<String>>) {
-        val isValid by remember { mutableStateOf(true) }
+        var isValid by remember { mutableStateOf(true) }
         var errorText by remember { mutableStateOf("") }
         val required by remember {
             mutableStateOf(widgetDto.validation.findString("required"))
@@ -91,23 +89,13 @@ class TextFieldCurrencyWidget(
                     disabledBorderColor = Black300,
                     disabledPlaceholderColor = Black300
                 ),
+                visualTransformation = CurrencyTransformation(),
                 isError = !isValid,
                 enabled = !isEnable,
                 value = values,
                 singleLine = isSingleLine,
                 onValueChange = { data: String ->
-                    values = data
-                    if (data.toLongOrZero() >= 0L){
-                        val cleanString = values.replace(Regex("[^0-9]"), "")
-                        val parsed = cleanString.toBigDecimalOrNull() ?: 0.toBigDecimal()
-                        val formatted = NumberFormat.getCurrencyInstance(Locale("id", "id")).format((parsed))
-                            .removeSuffix(",00")
-                        values = formatted
-                        TextFieldValue(
-                            text = data,
-                            selection = TextRange(data.length + 1)
-                        )
-                    }
+                    if (data.length <= maxLength.toIntOrZero()) values = data
                 },
                 placeholder = {
                     Text(
@@ -125,5 +113,25 @@ class TextFieldCurrencyWidget(
 
     override fun getHoist(): Map<String, MutableState<String>> {
         return mapOf(getValueString(fieldName, widgetDto))
+    }
+
+    class CurrencyTransformation: VisualTransformation{
+        override fun filter(text: AnnotatedString): TransformedText {
+            val transformation = formatCurrency(text)
+            return TransformedText(
+                text = AnnotatedString(transformation),
+                offsetMapping = object : OffsetMapping{
+                    override fun originalToTransformed(offset: Int): Int = transformation.length
+                    override fun transformedToOriginal(offset: Int): Int = text.length
+                }
+            )
+        }
+
+        private fun formatCurrency(s: CharSequence): String {
+            val cleanString = s.replace(Regex("[^0-9]"), "")
+            val parsed = cleanString.toBigDecimalOrNull() ?: 0.toBigDecimal()
+            return NumberFormat.getCurrencyInstance(Locale("id", "id")).format((parsed))
+                .removeSuffix(",00")
+        }
     }
 }

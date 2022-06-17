@@ -1,10 +1,5 @@
 package com.mitf.serverdrivenui
 
-
-/*
-    TODO Question:
-        1.
- */
 interface BackEndService {
     fun getPage(path: String, parameters: Map<String, String>): String
 }
@@ -136,61 +131,16 @@ val initialScreen = """
                         {
                             "classType" : [
                                 "singleline",
-                                "number"
-                            ],
-                            "viewtype" : "TEXT_FIELD_SEPARATE",
-                            "label" : "Example Field Separate 1",
-                            "data" : "Number Field",
-                            "default" : "",
-                            "placeholder": "tester123456",
-                            "validation" : [
-                                "required",
-                                "max:16"
-                            ]
-                        },
-                        {
-                            "classType" : [
-                                "singleline",
-                                "number"
-                            ],
-                            "viewtype" : "TEXT_FIELD_SEPARATE",
-                            "label" : "Example Field Separate 2",
-                            "data" : "Number Field",
-                            "default" : "",
-                            "placeholder": "tester12345678",
-                            "validation" : [
-                                "required",
-                                "max:16"
-                            ]
-                        },
-                        {
-                            "classType" : [
-                                "singleline",
-                                "number"
-                            ],
-                            "viewtype" : "TEXT_FIELD_SEPARATE",
-                            "label" : "Example Field Separate 3",
-                            "data" : "Number Field",
-                            "default" : "",
-                            "placeholder": "tester12345678",
-                            "validation" : [
-                                "required",
-                                "max:16"
-                            ]
-                        },
-                        {
-                            "classType" : [
-                                "singleline",
                                 "currency"
                             ],
                             "viewtype" : "TEXT_FIELD_CURRENCY",
                             "label" : "Example Currency Field",
                             "data" : "Number Field",
-                            "default" : 0,
+                            "default" : "",
                             "placeholder": "Rp10.000",
                             "validation" : [
                                 "required",
-                                "max:16"
+                                "max:9"
                             ]
                         },
                         {
