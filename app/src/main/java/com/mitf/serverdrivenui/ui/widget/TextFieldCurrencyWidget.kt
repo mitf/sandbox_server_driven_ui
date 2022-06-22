@@ -1,6 +1,5 @@
 package com.mitf.serverdrivenui.ui.widget
 
-import android.text.Selection
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,13 +14,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.*
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.mitf.serverdrivenui.dto.WidgetDto
 import com.mitf.serverdrivenui.ui.ComposableWidget
 import com.mitf.serverdrivenui.ui.theme.*
-import com.mitf.serverdrivenui.utils.*
+import com.mitf.serverdrivenui.utils.findString
+import com.mitf.serverdrivenui.utils.findSubStringAfter
+import com.mitf.serverdrivenui.utils.getValueString
+import com.mitf.serverdrivenui.utils.toIntOrZero
 import java.text.NumberFormat
 import java.util.*
 

@@ -1,6 +1,5 @@
 package com.mitf.serverdrivenui.ui.widget
 
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.mitf.serverdrivenui.dto.Data
 import com.mitf.serverdrivenui.dto.UiComponents
 import com.mitf.serverdrivenui.ui.ComposableWidget
 import com.mitf.serverdrivenui.ui.theme.*
@@ -22,34 +20,18 @@ import com.mitf.serverdrivenui.utils.findString
 import com.mitf.serverdrivenui.utils.findSubStringAfter
 import com.mitf.serverdrivenui.utils.toIntOrZero
 
-/*
-   TODO :
-        1. Implement TextFieldRowWidget like RT/RW and Number Field Done
-        2. Searching Added category field like number only field Done
-        3. Searching Added category field like character only field Done
-        4. Added currency field DONE
-*/
-
-/*
-    TODO :
-        1. Implement BaseActivity for SDUI
-        2. Implement endpath for navigation
-*/
-class TextFieldWidget(
+class TextFieldMultilineWidget(
 //    private val widgetDto: WidgetDto
-    private val uiComponent: UiComponents,
-    val data: Map<String, Any>
+    private val uiComponent: UiComponents
 ) : ComposableWidget {
     //    private val fieldName = widgetDto.data ?: "value"
-    private val fieldName = uiComponent.slug ?: ""
-    private var values = ""
+    private val fieldName = ""
 
     @OptIn(ExperimentalAnimationApi::class)
     @Composable
     override fun compose(hoist: Map<String, MutableState<String>>) {
         var isValid by remember { mutableStateOf(true) }
         var errorText by remember { mutableStateOf("") }
-        Log.d("datanyaValidation", uiComponent.validation.toString())
 //        val required by remember {
 //            mutableStateOf(widgetDto.validation.findString("required"))
 //        }
@@ -84,25 +66,11 @@ class TextFieldWidget(
 //        }
 //
 //        var values by remember {
-//            mutableStateOf("")
+//            mutableStateOf(hoist[fieldName]?.value ?: "")
 //        }
-        Log.d("datanyaHoist", hoist[fieldName]?.value.toString())
-        Log.d("datanyaHoistFieldName", data[fieldName].toString())
         var values by remember {
-            mutableStateOf(
-                if (hoist[fieldName]?.value?.isEmpty() == true) {
-                    data[fieldName].toString()
-                }
-                else {
-                    hoist[fieldName]?.value
-                }
-            )
+            mutableStateOf("")
         }
-//        var values by remember {
-//            mutableStateOf(
-//                data[fieldName].toString()
-//            )
-//        }
         val required by remember {
             mutableStateOf(
                 uiComponent.validation.findString("required")
@@ -150,7 +118,6 @@ class TextFieldWidget(
                     modifier = Modifier
                         .padding(top = 16.dp, bottom = 8.dp)
                         .wrapContentWidth(),
-//                    text = widgetDto.label ?: "",
                     text = uiComponent.label ?: "",
                     style = CaptionRegular
                 )
@@ -160,7 +127,8 @@ class TextFieldWidget(
                             color = if (!isEnable) White else Black200,
                             shape = RoundedCornerShape(size = 8.dp)
                         )
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .requiredHeight(150.dp),
                     shape = RoundedCornerShape(size = 8.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         backgroundColor = if (!isEnable) White else Black200,
@@ -176,7 +144,7 @@ class TextFieldWidget(
                     ),
                     isError = !isValid,
                     enabled = !isEnable,
-                    value = values.toString(),
+                    value = values,
                     singleLine = isSingleLine,
                     onValueChange = { data: String ->
                         isValid = when {
@@ -195,22 +163,18 @@ class TextFieldWidget(
                         }
                         when {
                             isDigit -> {
-                                Log.d("datanyaMasuk", "IsDigit")
                                 if (data.length <= maxLength.toIntOrZero())
                                     values = data.filter { it.isDigit() }
                             }
                             isChar -> {
-                                Log.d("datanyaMasuk", "IsChar")
                                 if (data.length <= maxLength.toIntOrZero())
                                     values = data.filter { it.isLetter() }
                             }
                             else -> {
-                                Log.d("datanyaMasukElseData", data.length.toString())
-                                Log.d("datanyaMasukElseParent", maxLength.toIntOrZero().toString())
-                                if (!data.contains(Regex("[^A-Za-z0-9 ,.]"))
+                                if (
+                                    !data.contains(Regex("[^A-Za-z0-9 ,.]"))
                                     && data.length <= maxLength.toIntOrZero()
-                                )
-                                    values = data
+                                ) values = data
                             }
                         }
 
@@ -267,7 +231,7 @@ class TextFieldWidget(
     }
 
     override fun getHoist(): Map<String, MutableState<String>> {
-        return mapOf(Pair(fieldName, mutableStateOf(values)))
+        return mapOf()
+//        return mapOf(Pair(fieldName, mutableStateOf("")))
     }
-
 }

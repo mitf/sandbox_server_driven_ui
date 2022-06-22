@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mitf.serverdrivenui.dto.OptionModel
 import com.mitf.serverdrivenui.dto.ScreenDto
+import com.mitf.serverdrivenui.dto.ScreenDtoNew
 import com.mitf.serverdrivenui.ui.Screen
 import com.mitf.serverdrivenui.ui.theme.Blue600
 import com.mitf.serverdrivenui.ui.theme.ServerDrivenUITheme
@@ -62,7 +63,8 @@ fun MyScreenContent(viewModel: ViewModel) {
     val screenJson = ServiceLocator.resolve(BackEndService::class.java).getPage("/", mapOf())
     val screenJsonString = StringHolder(remember { mutableStateOf(screenJson) })
     val moshi = Moshi.Builder().build()
-    val screenAdapter = moshi.adapter(ScreenDto::class.java)
+//    val screenAdapter = moshi.adapter(ScreenDto::class.java)
+    val screenAdapter = moshi.adapter(ScreenDtoNew::class.java)
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -111,7 +113,10 @@ fun MyScreenContent(viewModel: ViewModel) {
 
     CompositionLocalProvider(ScreenJson provides screenJsonString) {
         val holder = ScreenJson.current
+        Log.d("checkingAgainParentTop", holder.toString())
+        Log.d("checkingAgainParent", holder.held.value)
         screenAdapter.fromJson(holder.held.value)?.let {
+            Log.d("checkingAgain", it.toString())
 //            BottomSheetWidgets(
 //                widgetId = TextFieldSelectorWidget.widgetId,
 //                list = list,
@@ -133,7 +138,8 @@ fun MyScreenContent(viewModel: ViewModel) {
                     Log.d("datanyaId", id)
                     TextFieldSelectorWidget.isClicked.value = false
                     TextFieldSelectorWidget.itemSelected.value = optionSelected.value
-                }) {
+                }
+            ) {
                 Screen(it).compose()
             }
 //            BottomSheetWidget(

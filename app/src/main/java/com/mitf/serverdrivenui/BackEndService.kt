@@ -8,7 +8,7 @@ class FakeBackEndService : BackEndService {
     var fullname: String? = null
     override fun getPage(path: String, parameters: Map<String, String>): String {
         return when (path) {
-            "/" -> initialScreen
+            "/" -> newScreen
             "/check" -> secondScreen.also {
                 fullname = parameters["username"] + " " + parameters["radio"].toString()
             }
@@ -20,7 +20,202 @@ class FakeBackEndService : BackEndService {
         }
     }
 }
-
+val newScreen = """
+    {
+    "ui_version": "1.0.0",
+    "ui_name": "From Data",
+    "data": {
+      "date_created": "25 Juni 2022",
+      "avatar": "",
+      "branch_code": "",
+      "email": "superadminsally@finansia.com",
+      "employee_id": "",
+      "employee_name": "Superadmin",
+      "first_name": "Superadmin",
+      "id": 1,
+      "is_activition": false,
+      "name": "Joko",
+      "permissions": [
+        "create-permission",
+        "create-role",
+        "create-user",
+        "delete-permission",
+        "delete-role",
+        "delete-user",
+        "edit-permission",
+        "edit-role",
+        "edit-user",
+        "view-permission",
+        "view-role",
+        "view-user"
+      ],
+      "phone": "",
+      "roles": [
+        "superadmin"
+      ],
+      "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxIiwiZXhwIjoxNjU1Nzk0MzcxLCJzdWIiOiIxIn0.tOn3fJ5qGdiPjF6klLsqO6oWWlLmlxRkxX7LmNp2bQtVViLVKlbR9Qy4673aobZuEbYXYCYMNzYAoJMK4PxNCA",
+      "user_id": 1,
+      "username": "superadminsally"
+    },
+    "status_code": 200,
+    "status_desc": "OK",
+    "message": "Success",
+    "errors": null,
+    "ui_components": [
+      {
+        "label": "INPUT BIODATA",
+        "type": "HEADER",
+        "url": "",
+        "method": "",
+        "attributes": [
+          "header",
+          "title"
+        ],
+        "ui_components": [
+          {
+            "attributes": [
+              "text",
+              "place_holder: 23 Juni 2022",
+              "singleline",
+              "disable"
+            ],
+            "type": "TEXT_BOX",
+            "slug": "date_created",
+            "label": "Tanggal Dibuat",
+            "options": [],
+            "validation": [
+              "required"
+            ]
+          },
+          {
+            "attributes": [
+              "text",
+              "place_holder: Contoh: Budi",
+              "singleline"
+            ],
+            "type": "TEXT_BOX",
+            "slug": "name",
+            "label": "Name",
+            "options": [],
+            "validation": [
+              "required",
+              "min:0",
+              "max:30"
+            ]
+          },
+          {
+            "attributes": [
+              "number",
+              "place_holder: Contoh: 08111111111",
+              "singleline"
+            ],
+            "type": "TEXT_BOX",
+            "slug": "phone_number",
+            "label": "Nomor Handphone",
+            "options": [],
+            "validation": [
+              "required",
+              "min:10",
+              "max:12"
+            ]
+          },
+          {
+            "attributes": [
+              "email",
+              "place_holder: Contoh: budi@email.com",
+              "singleline"
+            ],
+            "type": "TEXT_BOX",
+            "slug": "email",
+            "label": "Email",
+            "options": [],
+            "validation": [
+              "required",
+              "min:10",
+              "max:50"
+            ]
+          },
+          {
+            "attributes": [
+              "place_holder: Alamat",
+              "singleline"
+            ],
+            "type": "TEXT_BOX",
+            "slug": "address",
+            "label": "Alamat Domisili",
+            "options": [],
+            "validation": [
+              "required",
+              "min:3",
+              "max:50"
+            ]
+          },
+          {
+            "attributes": [
+              "place_holder: Pilih Profesi/Pekerjaan",
+              "singleline"
+            ],
+            "type": "TEXT_BOX_SELECTOR",
+            "slug": "profession",
+            "label": "Profesi/Pekerjaan",
+            "options": [],
+            "validation": [
+              "required",
+              "min:0",
+              "max:50"
+            ]
+          },
+          {
+            "attributes": [
+              "place_holder: Pilih Tipe Lead",
+              "singleline",
+              "disable"
+            ],
+            "type": "TEXT_BOX_SELECTOR",
+            "slug": "profession",
+            "label": "Tipe Lead",
+            "options": [],
+            "validation": [
+              "required",
+              "min:0",
+              "max:50"
+            ]
+          },
+          {
+            "attributes": [
+              "place_holder: Pilih Sumber Lead",
+              "multiline"
+            ],
+            "type": "TEXT_BOX_SELECTOR",
+            "slug": "profession",
+            "label": "Sumber Lead",
+            "options": [],
+            "validation": [
+              "required",
+              "min:0",
+              "max:50"
+            ]
+          },
+          {
+            "attributes": [
+              "place_holder:Mohon berikan catatan jika ada tambahan informasi",
+              "multiline"
+            ],
+            "type": "TEXT_BOX_MULTILINE",
+            "slug": "profession",
+            "label": "Catatan",
+            "options": [],
+            "validation": [
+              "required",
+              "min:0",
+              "max:200"
+            ]
+          }
+        ]
+      }
+    ]
+} 
+"""
 val initialScreen = """
         {
             "children" : [
@@ -75,7 +270,7 @@ val initialScreen = """
                                 "multiline"
                             ],
                             "viewtype" : "TEXT_FIELD",
-                            "label" : "Example Input Field",
+                            "label" : "Example Input Field Username",
                             "data" : "username",
                             "default" : "",
                             "placeholder": "Example: user_1, user.2, user@3",

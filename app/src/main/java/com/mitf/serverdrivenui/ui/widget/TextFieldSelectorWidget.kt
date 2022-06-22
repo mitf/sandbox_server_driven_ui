@@ -18,15 +18,20 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import com.mitf.serverdrivenui.dto.UiComponents
 import com.mitf.serverdrivenui.dto.WidgetDto
 import com.mitf.serverdrivenui.ui.ComposableWidget
 import com.mitf.serverdrivenui.ui.theme.*
 import com.mitf.serverdrivenui.utils.ValidatorType
 import com.mitf.serverdrivenui.utils.findString
+import com.mitf.serverdrivenui.utils.findSubStringAfter
 import com.mitf.serverdrivenui.utils.getValueString
 
-class TextFieldSelectorWidget(private val widgetDto: WidgetDto) : ComposableWidget {
-    private val fieldName = widgetDto.data ?: "value"
+class TextFieldSelectorWidget(
+//    private val widgetDto: WidgetDto
+    private val uiComponent: UiComponents
+) : ComposableWidget {
+    private val fieldName = uiComponent.slug ?: "value"
 
     companion object {
         val isClicked = mutableStateOf(false)
@@ -43,11 +48,24 @@ class TextFieldSelectorWidget(private val widgetDto: WidgetDto) : ComposableWidg
         var isValid by remember { mutableStateOf(true) }
         var errorText by remember { mutableStateOf("") }
         val required by remember {
-            mutableStateOf(widgetDto.validation.findString(ValidatorType.REQUIRED.type))
+            mutableStateOf(uiComponent.validation.findString(ValidatorType.REQUIRED.type))
         }
 
         var value by remember {
-            mutableStateOf(hoist[fieldName]?.value ?: "")
+            mutableStateOf("")
+        }
+//        var value by remember {
+//            mutableStateOf(hoist[fieldName]?.value ?: "")
+//        }
+        val hint by remember {
+            mutableStateOf(
+                uiComponent.attributes.findSubStringAfter("place_holder")
+            )
+        }
+        val isEnable by remember {
+            mutableStateOf(
+                uiComponent.attributes?.contains("disable") ?: false
+            )
         }
 
         if (fieldName == fieldSelector.value) {
@@ -65,13 +83,13 @@ class TextFieldSelectorWidget(private val widgetDto: WidgetDto) : ComposableWidg
                         onPress = {
                             widgetId.value = fieldName
                             fieldSelector.value = fieldName
-                            selectorLabel.value = widgetDto.label ?: ""
+                            selectorLabel.value = uiComponent.label ?: ""
                             isClicked.value = true
                         },
                         onTap = {
                             widgetId.value = fieldName
                             fieldSelector.value = fieldName
-                            selectorLabel.value = widgetDto.label ?: ""
+                            selectorLabel.value = uiComponent.label ?: ""
                             isClicked.value = true
                         }
                     )
@@ -81,19 +99,19 @@ class TextFieldSelectorWidget(private val widgetDto: WidgetDto) : ComposableWidg
                 modifier = Modifier
                     .padding(top = 16.dp, bottom = 8.dp)
                     .fillMaxWidth(),
-                text = widgetDto.label ?: "",
+                text = uiComponent.label ?: "",
                 style = CaptionRegular
             )
             OutlinedTextField(
                 modifier = Modifier
                     .background(
-                        color = if (widgetDto.isEnable != false) White else Black200,
+                        color = if (!isEnable) White else Black200,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(size = 8.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    backgroundColor = if (widgetDto.isEnable != false) White else Black200,
+                    backgroundColor = if (!isEnable) White else Black200,
                     cursorColor = Blue600,
                     focusedBorderColor = Blue600,
                     errorBorderColor = Danger500,
@@ -105,13 +123,13 @@ class TextFieldSelectorWidget(private val widgetDto: WidgetDto) : ComposableWidg
                     disabledPlaceholderColor = Black300
                 ),
                 isError = !isValid,
-                enabled = false,
+                enabled = !isEnable,
                 value = value,
                 onValueChange = { data: String ->
                     value = data
                     isValid = when {
                         (data.isEmpty() && required.contains("required")) -> {
-                            errorText = "${widgetDto.label} tidak boleh kosong"
+                            errorText = "${uiComponent.label} tidak boleh kosong"
                             false
                         }
                         else -> true
@@ -119,7 +137,7 @@ class TextFieldSelectorWidget(private val widgetDto: WidgetDto) : ComposableWidg
                 },
                 placeholder = {
                     Text(
-                        text = widgetDto.placeholder ?: "",
+                        text = hint,
                         style = CaptionRegular,
                         color = Black600
                     )
@@ -151,7 +169,8 @@ class TextFieldSelectorWidget(private val widgetDto: WidgetDto) : ComposableWidg
     }
 
     override fun getHoist(): Map<String, MutableState<String>> {
-        return mapOf(getValueString(fieldName, widgetDto))
+        return mapOf()
+//        return mapOf(getValueString(fieldName, uiComponent))
 //        return mapOf(Pair(fieldName, mutableStateOf(getValueString(widgetDto))))
     }
 }

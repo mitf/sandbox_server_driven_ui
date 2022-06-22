@@ -8,19 +8,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.mitf.serverdrivenui.ScreenJson
+import com.mitf.serverdrivenui.dto.UiComponents
 import com.mitf.serverdrivenui.dto.WidgetDto
 import com.mitf.serverdrivenui.ui.ComposableWidget
 import com.mitf.serverdrivenui.ui.getComposableWidget
 //TODO : 1. Refactor BottomNavigation
 
 class FormWidget(
-    private val widgetDto: WidgetDto
+//    private val widgetDto: WidgetDto,
+    private val uiComponent: UiComponents,
+    private val data: Map<String, Any>
 ) : ComposableWidget {
     @Composable
     override fun compose(hoist: Map<String, MutableState<String>>) {
-        val childElements = widgetDto.children?.map { it.getComposableWidget() } ?: listOf()
+//        val childElements = widgetDto.children?.map { it.getComposableWidget() } ?: listOf()
+//        val children = childElements.map { Pair(it, data[it.getHoist()]) }
+        val childElements = uiComponent.ui_components?.map { it.getComposableWidget(data) } ?: listOf()
         val children = childElements.map { Pair(it, it.getHoist()) }
+        Log.d("datanyaFormParent", children.toString())
         Column(
             modifier = Modifier
                 .padding(24.dp)
@@ -48,7 +53,7 @@ class FormWidget(
                     .padding(top = 16.dp)
                     .fillMaxWidth()
             ) {
-                Text(widgetDto.label ?: "")
+                Text(uiComponent.label ?: "")
             }
         }
     }

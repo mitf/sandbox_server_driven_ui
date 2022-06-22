@@ -32,8 +32,8 @@ class LoginFormWidget(
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
     override fun compose(hoist: Map<String, MutableState<String>>) {
-        val childElements = widgetDto.children?.map { it.getComposableWidget() } ?: listOf()
-        val children = childElements.map { Pair(it, it.getHoist()) }
+//        val childElements = widgetDto.children?.map { it.getComposableWidget() } ?: listOf()
+//        val children = childElements.map { Pair(it, it.getHoist()) }
 
         val state = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
         val scope = rememberCoroutineScope()
@@ -117,9 +117,9 @@ class LoginFormWidget(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.padding(24.dp)
                     ) {
-                        children.map {
-                            it.first.compose(it.second)
-                        }
+//                        children.map {
+//                            it.first.compose(it.second)
+//                        }
                         val json = ScreenJson.current
                         Button(
                             onClick = {
