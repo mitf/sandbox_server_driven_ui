@@ -31,6 +31,18 @@ fun Any?.toLongOrZero(): Long =
 fun getValueString(fieldId: String, widgetDto: WidgetDto): Pair<String, MutableState<String>> =
     Pair(fieldId, mutableStateOf(widgetDto.default ?: ""))
 
+fun mapToPair(
+    fieldName: String,
+    value: Any
+): Pair<String, MutableState<String>>{
+    return when(value){
+        is String -> Pair(fieldName, mutableStateOf(value))
+        is Int -> Pair(fieldName, mutableStateOf(value.toString()))
+        is Double -> Pair(fieldName, mutableStateOf(value.toString()))
+        else -> Pair(fieldName, mutableStateOf(""))
+    }
+}
+
 fun EditText.setCurrencyInputType() = this.addTextChangedListener(object : TextWatcher {
     var lastText = ""
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit

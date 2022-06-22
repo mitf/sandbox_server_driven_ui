@@ -141,7 +141,7 @@ val newScreen = """
               "singleline",
               "currency"
             ],
-            "type": "TEXT_BOX_CURRENCY",
+            "type": "TEXT_BOX",
             "slug": "address",
             "label": "Alamat Domisili",
             "options": [],
@@ -173,7 +173,7 @@ val newScreen = """
               "disable"
             ],
             "type": "TEXT_BOX_SELECTOR",
-            "slug": "profession",
+            "slug": "lead_type",
             "label": "Tipe Lead",
             "options": [],
             "validation": [
@@ -188,7 +188,7 @@ val newScreen = """
               "multiline"
             ],
             "type": "TEXT_BOX_SELECTOR",
-            "slug": "profession",
+            "slug": "lead_source",
             "label": "Sumber Lead",
             "options": [],
             "validation": [
@@ -203,7 +203,7 @@ val newScreen = """
               "multiline"
             ],
             "type": "TEXT_BOX_MULTILINE",
-            "slug": "profession",
+            "slug": "note",
             "label": "Catatan",
             "options": [],
             "validation": [

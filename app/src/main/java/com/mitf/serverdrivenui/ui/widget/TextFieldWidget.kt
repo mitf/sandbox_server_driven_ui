@@ -20,6 +20,7 @@ import com.mitf.serverdrivenui.ui.ComposableWidget
 import com.mitf.serverdrivenui.ui.theme.*
 import com.mitf.serverdrivenui.utils.findString
 import com.mitf.serverdrivenui.utils.findSubStringAfter
+import com.mitf.serverdrivenui.utils.mapToPair
 import com.mitf.serverdrivenui.utils.toIntOrZero
 
 /*
@@ -43,7 +44,7 @@ class TextFieldWidget(
 ) : ComposableWidget {
     //    private val fieldName = widgetDto.data ?: "value"
     private val fieldName = uiComponent.slug ?: ""
-    private lateinit var valueData: Any
+    private var valueData = ""
 
     @OptIn(ExperimentalAnimationApi::class)
     @Composable
@@ -99,7 +100,6 @@ class TextFieldWidget(
                 }
             )
         }
-        valueData = values.toString()
 //        var values by remember {
 //            mutableStateOf(
 //                data[fieldName].toString()
@@ -223,6 +223,7 @@ class TextFieldWidget(
                                 }
                             }
                         }
+                        hoist[fieldName]?.value = data
                     },
                     placeholder = {
                         Text(
@@ -276,7 +277,7 @@ class TextFieldWidget(
     }
 
     override fun getHoist(): Map<String, MutableState<String>> {
-        return mapOf(Pair(fieldName, mutableStateOf(valueData.toString())))
+        return mapOf(mapToPair(fieldName, valueData))
     }
 
 }

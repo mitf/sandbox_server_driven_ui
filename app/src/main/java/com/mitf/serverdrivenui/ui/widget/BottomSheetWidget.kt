@@ -127,6 +127,7 @@ fun BottomSheetWidget(
                                 modifier = Modifier.clickable {
                                     scope.launch {
                                         onItemSelected(item, widgetId.value)
+                                        searchSelectorItem = ""
                                         if (state.bottomSheetState.isCollapsed) {
                                             keyboardController?.hide()
                                             state.bottomSheetState.expand()

@@ -29,6 +29,7 @@ import com.mitf.serverdrivenui.ui.theme.ServerDrivenUITheme
 import com.mitf.serverdrivenui.ui.widget.BottomSheetWidget
 import com.mitf.serverdrivenui.ui.widget.BottomSheetWidgets
 import com.mitf.serverdrivenui.ui.widget.TextFieldSelectorWidget
+import com.mitf.serverdrivenui.ui.widget.TextFieldWidget
 import com.squareup.moshi.Moshi
 
 class MainActivity : AppCompatActivity() {
@@ -110,6 +111,56 @@ fun MyScreenContent(viewModel: ViewModel) {
             "value 10"
         )
     )
+    val list2 = listOf(
+        OptionModel(
+            "1",
+            "value 12"
+        ),
+        OptionModel(
+            "2",
+            "value 22"
+        ),
+        OptionModel(
+            "3",
+            "value 33"
+        ),
+        OptionModel(
+            "4",
+            "value 45"
+        ),
+        OptionModel(
+            "5",
+            "value 56"
+        ),
+        OptionModel(
+            "6",
+            "value 67"
+        ),
+        OptionModel(
+            "7",
+            "value 78"
+        ),
+        OptionModel(
+            "8",
+            "value 89"
+        ),
+        OptionModel(
+            "9",
+            "value 90"
+        ),
+        OptionModel(
+            "10",
+            "value 111"
+        )
+    )
+    val listAll =
+        when(TextFieldSelectorWidget.widgetId.value){
+            "profession" -> list
+            "lead_source" -> list2
+            else -> listOf()
+        }
+    Log.d("datanyaIdField", TextFieldSelectorWidget.widgetId.value)
+    Log.d("datanyaList", listAll.toString())
 
     CompositionLocalProvider(ScreenJson provides screenJsonString) {
         val holder = ScreenJson.current
@@ -131,7 +182,8 @@ fun MyScreenContent(viewModel: ViewModel) {
 //            }
             BottomSheetWidget(
                 widgetId = TextFieldSelectorWidget.widgetId,
-                list = list,
+//                list = list,
+                list = listAll,
                 onClicked = TextFieldSelectorWidget.isClicked,
                 scope = coroutineScope,
                 onItemSelected = { optionSelected, id ->

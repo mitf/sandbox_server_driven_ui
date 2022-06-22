@@ -81,16 +81,20 @@ class TextFieldSelectorWidget(
                 .pointerInput(Unit) {
                     detectTapGestures(
                         onPress = {
-                            widgetId.value = fieldName
-                            fieldSelector.value = fieldName
-                            selectorLabel.value = uiComponent.label ?: ""
-                            isClicked.value = true
+                            if (!isEnable){
+                                widgetId.value = fieldName
+                                fieldSelector.value = fieldName
+                                selectorLabel.value = uiComponent.label ?: ""
+                                isClicked.value = true
+                            }
                         },
                         onTap = {
-                            widgetId.value = fieldName
-                            fieldSelector.value = fieldName
-                            selectorLabel.value = uiComponent.label ?: ""
-                            isClicked.value = true
+                            if (!isEnable){
+                                widgetId.value = fieldName
+                                fieldSelector.value = fieldName
+                                selectorLabel.value = uiComponent.label ?: ""
+                                isClicked.value = true
+                            }
                         }
                     )
                 }
@@ -123,7 +127,7 @@ class TextFieldSelectorWidget(
                     disabledPlaceholderColor = Black300
                 ),
                 isError = !isValid,
-                enabled = !isEnable,
+                enabled = false,
                 value = value,
                 onValueChange = { data: String ->
                     value = data
