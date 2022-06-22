@@ -138,9 +138,10 @@ val newScreen = """
           {
             "attributes": [
               "place_holder: Alamat",
-              "singleline"
+              "singleline",
+              "currency"
             ],
-            "type": "TEXT_BOX",
+            "type": "TEXT_BOX_CURRENCY",
             "slug": "address",
             "label": "Alamat Domisili",
             "options": [],

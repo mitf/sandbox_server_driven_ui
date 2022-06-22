@@ -17,12 +17,10 @@ import com.mitf.serverdrivenui.ui.getComposableWidget
 class FormWidget(
 //    private val widgetDto: WidgetDto,
     private val uiComponent: UiComponents,
-    private val data: Map<String, Any>
+    private val data: MutableMap<String, Any>
 ) : ComposableWidget {
     @Composable
     override fun compose(hoist: Map<String, MutableState<String>>) {
-//        val childElements = widgetDto.children?.map { it.getComposableWidget() } ?: listOf()
-//        val children = childElements.map { Pair(it, data[it.getHoist()]) }
         val childElements = uiComponent.ui_components?.map { it.getComposableWidget(data) } ?: listOf()
         val children = childElements.map { Pair(it, it.getHoist()) }
         Log.d("datanyaFormParent", children.toString())
@@ -57,6 +55,7 @@ class FormWidget(
             }
         }
     }
+
 
     override fun getHoist(): Map<String, MutableState<String>> {
         return mapOf()

@@ -8,7 +8,7 @@ import java.util.HashSet
 @JsonClass(generateAdapter = true)
 data class ScreenDtoNew(
 //    val data: Data? = null,
-    val data: Map<String, Any>? = null,
+    val data: MutableMap<String, Any>? = null,
     val errors: Any? = null,
     val message: String? = null,
     val statusCode: Int? = null,

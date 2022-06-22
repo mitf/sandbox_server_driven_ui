@@ -19,14 +19,13 @@ class Screen(
 ) {
     //    val dataMap = screenDto.data[]
     var widget = screenDto.ui_components?.map {
-        it.getComposableWidget(screenDto.data ?: mapOf())
+        it.getComposableWidget(screenDto.data ?: mutableMapOf())
     } ?: listOf()
 
 //    var widget = screenDto.children?.map {
 //        it.getComposableWidget()
 //    } ?: listOf()
 
-    @RequiresApi(Build.VERSION_CODES.N)
     @Composable
     fun compose() {
         val scrollState = rememberScrollState()
@@ -80,7 +79,7 @@ class EmptyWidget : ComposableWidget {
 //    }
 //}
 
-fun UiComponents.getComposableWidget(data: Map<String, Any>): ComposableWidget {
+fun UiComponents.getComposableWidget(data: MutableMap<String, Any>): ComposableWidget {
     return when (this.type) {
         Type.HEADER -> FormWidget(this, data)
         Type.TEXT_BOX -> TextFieldWidget(this, data)

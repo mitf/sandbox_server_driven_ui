@@ -27,6 +27,7 @@ fun Any?.toIntOrZero(): Int =
 fun Any?.toLongOrZero(): Long =
     (this ?: "").toString().replace(Regex("[^0-9]"), "").toLongOrNull() ?: 0
 
+// in Extension
 fun getValueString(fieldId: String, widgetDto: WidgetDto): Pair<String, MutableState<String>> =
     Pair(fieldId, mutableStateOf(widgetDto.default ?: ""))
 

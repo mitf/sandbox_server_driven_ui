@@ -34,15 +34,16 @@ import com.mitf.serverdrivenui.utils.toIntOrZero
     TODO :
         1. Implement BaseActivity for SDUI
         2. Implement endpath for navigation
+        3. Extension untuk cek tipe data
 */
 class TextFieldWidget(
 //    private val widgetDto: WidgetDto
     private val uiComponent: UiComponents,
-    val data: Map<String, Any>
+    val dataMap: MutableMap<String, Any>
 ) : ComposableWidget {
     //    private val fieldName = widgetDto.data ?: "value"
     private val fieldName = uiComponent.slug ?: ""
-    private var values = ""
+    private lateinit var valueData: Any
 
     @OptIn(ExperimentalAnimationApi::class)
     @Composable
@@ -87,17 +88,18 @@ class TextFieldWidget(
 //            mutableStateOf("")
 //        }
         Log.d("datanyaHoist", hoist[fieldName]?.value.toString())
-        Log.d("datanyaHoistFieldName", data[fieldName].toString())
+        Log.d("datanyaHoistFieldName", dataMap[fieldName].toString())
         var values by remember {
             mutableStateOf(
                 if (hoist[fieldName]?.value?.isEmpty() == true) {
-                    data[fieldName].toString()
+                    dataMap[fieldName].toString()
                 }
                 else {
                     hoist[fieldName]?.value
                 }
             )
         }
+        valueData = values.toString()
 //        var values by remember {
 //            mutableStateOf(
 //                data[fieldName].toString()
@@ -179,6 +181,8 @@ class TextFieldWidget(
                     value = values.toString(),
                     singleLine = isSingleLine,
                     onValueChange = { data: String ->
+                        values = data
+                        valueData = data
                         isValid = when {
                             (data.isEmpty() && required.contains("required")) -> {
 //                                errorText = "${widgetDto.label} tidak boleh kosong"
@@ -196,24 +200,29 @@ class TextFieldWidget(
                         when {
                             isDigit -> {
                                 Log.d("datanyaMasuk", "IsDigit")
-                                if (data.length <= maxLength.toIntOrZero())
+                                if (data.length <= maxLength.toIntOrZero()){
                                     values = data.filter { it.isDigit() }
+                                    valueData = data.filter { it.isDigit() }
+                                }
                             }
                             isChar -> {
                                 Log.d("datanyaMasuk", "IsChar")
-                                if (data.length <= maxLength.toIntOrZero())
+                                if (data.length <= maxLength.toIntOrZero()){
                                     values = data.filter { it.isLetter() }
+                                    valueData = data.filter { it.isLetter() }
+                                }
                             }
                             else -> {
                                 Log.d("datanyaMasukElseData", data.length.toString())
                                 Log.d("datanyaMasukElseParent", maxLength.toIntOrZero().toString())
                                 if (!data.contains(Regex("[^A-Za-z0-9 ,.]"))
                                     && data.length <= maxLength.toIntOrZero()
-                                )
+                                ){
                                     values = data
+                                    valueData = data
+                                }
                             }
                         }
-
                     },
                     placeholder = {
                         Text(
@@ -267,7 +276,7 @@ class TextFieldWidget(
     }
 
     override fun getHoist(): Map<String, MutableState<String>> {
-        return mapOf(Pair(fieldName, mutableStateOf(values)))
+        return mapOf(Pair(fieldName, mutableStateOf(valueData.toString())))
     }
 
 }
