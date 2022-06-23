@@ -22,7 +22,8 @@ import com.mitf.serverdrivenui.utils.toIntOrZero
 
 class TextFieldMultilineWidget(
 //    private val widgetDto: WidgetDto
-    private val uiComponent: UiComponents
+    private val uiComponent: UiComponents,
+    private val data: MutableMap<String, Any>
 ) : ComposableWidget {
     //    private val fieldName = widgetDto.data ?: "value"
     private val fieldName = ""

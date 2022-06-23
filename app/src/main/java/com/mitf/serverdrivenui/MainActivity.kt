@@ -182,8 +182,7 @@ fun MyScreenContent(viewModel: ViewModel) {
 //            }
             BottomSheetWidget(
                 widgetId = TextFieldSelectorWidget.widgetId,
-//                list = list,
-                list = listAll,
+                list = TextFieldSelectorWidget.optionItem,
                 onClicked = TextFieldSelectorWidget.isClicked,
                 scope = coroutineScope,
                 onItemSelected = { optionSelected, id ->

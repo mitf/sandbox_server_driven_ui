@@ -159,7 +159,16 @@ val newScreen = """
             "type": "TEXT_BOX_SELECTOR",
             "slug": "profession",
             "label": "Profesi/Pekerjaan",
-            "options": [],
+            "options": [
+                {
+                    "id":"1",
+                    "value":"value1"
+                },
+                {
+                    "id":"2",
+                    "value":"value2"
+                }
+            ],
             "validation": [
               "required",
               "min:0",
@@ -175,7 +184,16 @@ val newScreen = """
             "type": "TEXT_BOX_SELECTOR",
             "slug": "lead_type",
             "label": "Tipe Lead",
-            "options": [],
+            "options": [
+                {
+                    "id":"TLO",
+                    "value":"TLO"
+                },
+                {
+                    "id":"ALL-RISK",
+                    "value":"ALL-RISK"
+                }
+            ],
             "validation": [
               "required",
               "min:0",
@@ -190,7 +208,16 @@ val newScreen = """
             "type": "TEXT_BOX_SELECTOR",
             "slug": "lead_source",
             "label": "Sumber Lead",
-            "options": [],
+            "options": [
+                {
+                    "id":"1",
+                    "value":"value21"
+                },
+                {
+                    "id":"2",
+                    "value":"value22"
+                }
+            ],
             "validation": [
               "required",
               "min:0",

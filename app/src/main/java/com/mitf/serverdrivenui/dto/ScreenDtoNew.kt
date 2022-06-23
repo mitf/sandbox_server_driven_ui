@@ -40,7 +40,7 @@ data class UiComponents(
     val type: Type? = null,
     val ui_components: List<UiComponents>? = null,
     val url: String? = null,
-    val options: List<Any>? = null,
+    val options: List<OptionModel>? = null,
     val slug: String? = null,
     val validation: List<String>? = null
 )

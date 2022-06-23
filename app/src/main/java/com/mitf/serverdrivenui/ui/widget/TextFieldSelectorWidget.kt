@@ -18,18 +18,18 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import com.mitf.serverdrivenui.dto.OptionModel
 import com.mitf.serverdrivenui.dto.UiComponents
 import com.mitf.serverdrivenui.dto.WidgetDto
 import com.mitf.serverdrivenui.ui.ComposableWidget
 import com.mitf.serverdrivenui.ui.theme.*
-import com.mitf.serverdrivenui.utils.ValidatorType
-import com.mitf.serverdrivenui.utils.findString
-import com.mitf.serverdrivenui.utils.findSubStringAfter
-import com.mitf.serverdrivenui.utils.getValueString
+import com.mitf.serverdrivenui.utils.*
 
 class TextFieldSelectorWidget(
 //    private val widgetDto: WidgetDto
-    private val uiComponent: UiComponents
+    private val uiComponent: UiComponents,
+    private val dataMap: MutableMap<String, Any>
+
 ) : ComposableWidget {
     private val fieldName = uiComponent.slug ?: "value"
 
@@ -39,6 +39,7 @@ class TextFieldSelectorWidget(
         val itemSelected = mutableStateOf("")
         val fieldSelector = mutableStateOf("")
         val widgetId = mutableStateOf("")
+        val optionItem = mutableStateListOf<OptionModel>()
     }
 
     @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
@@ -50,7 +51,8 @@ class TextFieldSelectorWidget(
         val required by remember {
             mutableStateOf(uiComponent.validation.findString(ValidatorType.REQUIRED.type))
         }
-
+        optionItem.clear()
+        optionItem.addAll(uiComponent.options ?: listOf())
         var value by remember {
             mutableStateOf("")
         }
@@ -173,7 +175,7 @@ class TextFieldSelectorWidget(
     }
 
     override fun getHoist(): Map<String, MutableState<String>> {
-        return mapOf()
+        return mapOf(mapToPair(fieldName, dataMap[fieldName]))
 //        return mapOf(getValueString(fieldName, uiComponent))
 //        return mapOf(Pair(fieldName, mutableStateOf(getValueString(widgetDto))))
     }

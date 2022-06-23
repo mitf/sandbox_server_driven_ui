@@ -83,8 +83,8 @@ fun UiComponents.getComposableWidget(data: MutableMap<String, Any>): ComposableW
     return when (this.type) {
         Type.HEADER -> FormWidget(this, data)
         Type.TEXT_BOX -> TextFieldWidget(this, data)
-        Type.TEXT_BOX_MULTILINE -> TextFieldMultilineWidget(this)
-        Type.TEXT_BOX_SELECTOR -> TextFieldSelectorWidget(this)
+        Type.TEXT_BOX_MULTILINE -> TextFieldMultilineWidget(this, data)
+        Type.TEXT_BOX_SELECTOR -> TextFieldSelectorWidget(this, data)
         else -> EmptyWidget()
     }
 }

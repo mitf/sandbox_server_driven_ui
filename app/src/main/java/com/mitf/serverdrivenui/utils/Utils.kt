@@ -33,7 +33,7 @@ fun getValueString(fieldId: String, widgetDto: WidgetDto): Pair<String, MutableS
 
 fun mapToPair(
     fieldName: String,
-    value: Any
+    value: Any?
 ): Pair<String, MutableState<String>>{
     return when(value){
         is String -> Pair(fieldName, mutableStateOf(value))

@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.mitf.serverdrivenui.dto.Data
 import com.mitf.serverdrivenui.dto.UiComponents
 import com.mitf.serverdrivenui.ui.ComposableWidget
 import com.mitf.serverdrivenui.ui.theme.*
@@ -277,7 +276,7 @@ class TextFieldWidget(
     }
 
     override fun getHoist(): Map<String, MutableState<String>> {
-        return mapOf(mapToPair(fieldName, valueData))
+        return mapOf(mapToPair(fieldName, dataMap[fieldName]))
     }
 
 }
