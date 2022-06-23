@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -46,10 +47,12 @@ fun BottomSheetWidget(
 
     var searchSelectorItem by remember { mutableStateOf("") }
 
+    //added reference id like flutter
     BottomSheetScaffold(
         sheetContent = {
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
+                    .layoutId(widgetId),
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Column(

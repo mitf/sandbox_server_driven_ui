@@ -28,7 +28,9 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setContent {
+            Log.d("datanyaCheck", "TopOfCOntent")
             ServerDrivenUITheme {
+                Log.d("datanyaCheck", "TopOfCOntentTheme")
                 MyScreenContent(viewModel)
             }
         }
@@ -49,7 +51,6 @@ fun MyScreenContent(viewModel: ViewModel) {
     val screenJson = ServiceLocator.resolve(BackEndService::class.java).getPage("/", mapOf())
     val screenJsonString = StringHolder(remember { mutableStateOf(screenJson) })
     val moshi = Moshi.Builder().build()
-//    val screenAdapter = moshi.adapter(ScreenDto::class.java)
     val screenAdapter = moshi.adapter(ScreenDtoNew::class.java)
 
     val coroutineScope = rememberCoroutineScope()
@@ -145,14 +146,15 @@ fun MyScreenContent(viewModel: ViewModel) {
             else -> listOf()
         }
     Log.d("datanyaIdField", TextFieldSelectorWidget.widgetId.value)
-    Log.d("datanyaList", listAll.toString())
+    Log.d("datanyaList===", listAll.toString())
 
     CompositionLocalProvider(ScreenJson provides screenJsonString) {
         val holder = ScreenJson.current
         screenAdapter.fromJson(holder.held.value)?.let {
+            Log.d("datanyaList", "testcall")
             BottomSheetWidget(
                 widgetId = TextFieldSelectorWidget.widgetId,
-                list = listAll,
+                list = TextFieldSelectorWidget.optionItem,
                 onClicked = TextFieldSelectorWidget.isClicked,
                 scope = coroutineScope,
                 onItemSelected = { optionSelected, id ->

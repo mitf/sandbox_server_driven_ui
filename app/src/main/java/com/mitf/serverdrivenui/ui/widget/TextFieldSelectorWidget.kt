@@ -55,7 +55,15 @@ class TextFieldSelectorWidget(
 //            mutableStateOf("")
 //        }
         var value by remember {
-            mutableStateOf(hoist[fieldName]?.value ?: "")
+            mutableStateOf(
+//                hoist[fieldName]?.value ?: ""
+                if (hoist[fieldName]?.value?.isEmpty() == true) {
+                    dataMap[fieldName].toString()
+                }
+                else {
+                    hoist[fieldName]?.value
+                }
+            )
         }
         val hint by remember {
             mutableStateOf(
@@ -130,7 +138,7 @@ class TextFieldSelectorWidget(
                 ),
                 isError = !isValid,
                 enabled = false,
-                value = value,
+                value = value ?: "",
                 onValueChange = { data: String ->
                     value = data
                     isValid = when {
