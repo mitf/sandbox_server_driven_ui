@@ -5,31 +5,16 @@ import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mitf.serverdrivenui.dto.OptionModel
-import com.mitf.serverdrivenui.dto.ScreenDto
 import com.mitf.serverdrivenui.dto.ScreenDtoNew
 import com.mitf.serverdrivenui.ui.Screen
-import com.mitf.serverdrivenui.ui.theme.Blue600
 import com.mitf.serverdrivenui.ui.theme.ServerDrivenUITheme
 import com.mitf.serverdrivenui.ui.widget.BottomSheetWidget
-import com.mitf.serverdrivenui.ui.widget.BottomSheetWidgets
 import com.mitf.serverdrivenui.ui.widget.TextFieldSelectorWidget
-import com.mitf.serverdrivenui.ui.widget.TextFieldWidget
 import com.squareup.moshi.Moshi
 
 class MainActivity : AppCompatActivity() {
@@ -164,114 +149,19 @@ fun MyScreenContent(viewModel: ViewModel) {
 
     CompositionLocalProvider(ScreenJson provides screenJsonString) {
         val holder = ScreenJson.current
-        Log.d("checkingAgainParentTop", holder.toString())
-        Log.d("checkingAgainParent", holder.held.value)
         screenAdapter.fromJson(holder.held.value)?.let {
-            Log.d("checkingAgain", it.toString())
-//            BottomSheetWidgets(
-//                widgetId = TextFieldSelectorWidget.widgetId,
-//                list = list,
-//                scope = rememberCoroutineScope(),
-//                onClicked = TextFieldSelectorWidget.isClicked,
-//                onItemSelected = { item, _ ->
-//                    TextFieldSelectorWidget.isClicked.value = false
-//                    TextFieldSelectorWidget.itemSelected.value = item.value
-//                }
-//            ) {
-//                Screen(it).compose()
-//            }
             BottomSheetWidget(
                 widgetId = TextFieldSelectorWidget.widgetId,
-                list = TextFieldSelectorWidget.optionItem,
+                list = listAll,
                 onClicked = TextFieldSelectorWidget.isClicked,
                 scope = coroutineScope,
                 onItemSelected = { optionSelected, id ->
-                    Log.d("datanyaId", id)
                     TextFieldSelectorWidget.isClicked.value = false
                     TextFieldSelectorWidget.itemSelected.value = optionSelected.value
                 }
             ) {
                 Screen(it).compose()
             }
-//            BottomSheetWidget(
-//                id = TextFieldSelectorWidget.widgetId,
-//                list = list,
-//                onClicked = TextFieldSelectorWidget.isClicked,
-//                scope = coroutineScope,
-//                onItemSelected = { optionSelected, id ->
-//                    Log.d("datanyaId", id)
-//                    TextFieldSelectorWidget.isClicked.value = false
-//                    TextFieldSelectorWidget.itemSelected.value = optionSelected.value
-//                }) {
-//                ConstraintLayout(
-//                    modifier = Modifier.fillMaxSize(),
-//                ) {
-//                    val (header, lineCenter, body) = createRefs()
-//                    Box(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .fillMaxHeight(fraction = 0.5f)
-//                            .background(Blue600)
-//                            .constrainAs(header) {
-//                                top.linkTo(parent.top)
-//                                start.linkTo(parent.start)
-//                                end.linkTo(parent.end)
-//                                bottom.linkTo(lineCenter.top)
-//                            },
-//                    ) {
-//                        ConstraintLayout {
-//                            val (bg, icon) = createRefs()
-//                            Image(
-//                                painter = painterResource(id = R.drawable.bg_login_top),
-//                                contentDescription = "ImageBackgroundTop",
-//                                contentScale = ContentScale.Crop,
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                                    .constrainAs(bg) {
-//                                        top.linkTo(parent.top)
-//                                        start.linkTo(parent.start)
-//                                        end.linkTo(parent.end)
-//                                    }
-//                            )
-//                            Image(
-//                                painter = painterResource(id = R.drawable.ic_logo),
-//                                contentDescription = "ImageBackgroundTop",
-//                                contentScale = ContentScale.Inside,
-//                                modifier = Modifier
-//                                    .constrainAs(icon) {
-//                                        top.linkTo(parent.top, margin = 20.dp)
-//                                        start.linkTo(parent.start)
-//                                        end.linkTo(parent.end)
-//                                    }
-//                            )
-//                        }
-//                    }
-//                    Spacer(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .constrainAs(lineCenter) {
-//                                top.linkTo(parent.top)
-//                                bottom.linkTo(parent.bottom)
-//                                start.linkTo(parent.start)
-//                                end.linkTo(parent.end)
-//                            },
-//                    )
-//                    Card(
-//                        elevation = 2.dp,
-//                        shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-//                        modifier = Modifier
-//                            .constrainAs(body) {
-//                                top.linkTo(lineCenter.bottom)
-//                                bottom.linkTo(lineCenter.bottom)
-//                                start.linkTo(parent.start)
-//                                end.linkTo(parent.end)
-//                            }
-//                            .padding(start = 16.dp, end = 16.dp)
-//                    ) {
-//                        Screen(it).compose()
-//                    }
-//                }
-//            }
         }
     }
 }

@@ -51,14 +51,12 @@ class TextFieldSelectorWidget(
         val required by remember {
             mutableStateOf(uiComponent.validation.findString(ValidatorType.REQUIRED.type))
         }
-        optionItem.clear()
-        optionItem.addAll(uiComponent.options ?: listOf())
-        var value by remember {
-            mutableStateOf("")
-        }
 //        var value by remember {
-//            mutableStateOf(hoist[fieldName]?.value ?: "")
+//            mutableStateOf("")
 //        }
+        var value by remember {
+            mutableStateOf(hoist[fieldName]?.value ?: "")
+        }
         val hint by remember {
             mutableStateOf(
                 uiComponent.attributes.findSubStringAfter("place_holder")
@@ -71,6 +69,8 @@ class TextFieldSelectorWidget(
         }
 
         if (fieldName == fieldSelector.value) {
+            optionItem.clear()
+            optionItem.addAll(uiComponent.options ?: listOf())
             value = itemSelected.value
             hoist[fieldName]?.value = itemSelected.value
         }
@@ -176,7 +176,5 @@ class TextFieldSelectorWidget(
 
     override fun getHoist(): Map<String, MutableState<String>> {
         return mapOf(mapToPair(fieldName, dataMap[fieldName]))
-//        return mapOf(getValueString(fieldName, uiComponent))
-//        return mapOf(Pair(fieldName, mutableStateOf(getValueString(widgetDto))))
     }
 }

@@ -26,11 +26,14 @@ val newScreen = """
     "ui_name": "From Data",
     "data": {
       "date_created": "25 Juni 2022",
-      "avatar": "",
+      "address": "Jl. tester123",
       "branch_code": "",
       "email": "superadminsally@finansia.com",
-      "employee_id": "",
-      "employee_name": "Superadmin",
+      "profession": "",
+      "lead_type": "",
+      "lead_source": "",
+      "note": "",
+      "phone_number": "081231234132",
       "first_name": "Superadmin",
       "id": 1,
       "is_activition": false,
@@ -211,11 +214,11 @@ val newScreen = """
             "options": [
                 {
                     "id":"1",
-                    "value":"value21"
+                    "value":"value31"
                 },
                 {
                     "id":"2",
-                    "value":"value22"
+                    "value":"value32"
                 }
             ],
             "validation": [
